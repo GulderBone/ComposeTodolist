@@ -24,7 +24,9 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Routes.TODO_LIST,
                 ) {
-                    composable(route = Routes.TODO_LIST) {
+                    composable(
+                        route = Routes.TODO_LIST
+                    ) {
                         TodoListScreen(
                             onNavigate = { navController.navigate(it.route) }
                         )

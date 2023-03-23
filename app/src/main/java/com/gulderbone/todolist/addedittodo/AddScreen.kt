@@ -1,29 +1,121 @@
 package com.gulderbone.todolist.addedittodo
 
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gulderbone.todolist.UiEvent.PopBackStack
+import com.gulderbone.todolist.UiEvent.ShowSnackbar
+import com.gulderbone.todolist.addedittodo.AddEditTodoEvent.OnDescriptionChange
+import com.gulderbone.todolist.addedittodo.AddEditTodoEvent.OnSaveTodoClick
+import com.gulderbone.todolist.addedittodo.AddEditTodoEvent.OnTitleChange
 
 @Composable
 fun AddScreen(
     viewModel: AddEditTodoViewModel = hiltViewModel(),
     onPopBackStack: () -> Unit,
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
-
+            when (event) {
+                is ShowSnackbar -> snackbarHostState.showSnackbar(
+                    message = event.message,
+                    actionLabel = event.action,
+                )
+                is PopBackStack -> onPopBackStack()
+                else -> {}
+            }
         }
     }
 
-    BasicTextField(value = viewModel.state.title ?: "", onValueChange = {
-
-    })
-    Button(onClick = {
-
-    }) {
-
-    }
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        content = { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .padding(16.dp)
+                    .fillMaxSize()
+            ) {
+                val focusManager = LocalFocusManager.current
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = viewModel.state.title,
+                    onValueChange = {
+                        if (it.length < 50) {
+                            viewModel.onEvent(OnTitleChange(it))
+                        }
+                    },
+                    placeholder = {
+                        Text(text = "Title")
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.moveFocus(FocusDirection.Next)
+                        }
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = viewModel.state.description,
+                    onValueChange = {
+                        if (it.length < 200) {
+                            viewModel.onEvent(OnDescriptionChange(it))
+                        }
+                    },
+                    placeholder = {
+                        Text(text = "Description")
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                            viewModel.onEvent(OnSaveTodoClick)
+                        }
+                    ),
+                )
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                viewModel.onEvent(OnSaveTodoClick)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Save",
+                )
+            }
+        }
+    )
 }

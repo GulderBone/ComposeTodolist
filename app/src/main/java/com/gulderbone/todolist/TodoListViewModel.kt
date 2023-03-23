@@ -2,10 +2,15 @@ package com.gulderbone.todolist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gulderbone.todolist.TodoListEvent.OnAddTodoCLick
+import com.gulderbone.todolist.TodoListEvent.OnDeleteToDo
+import com.gulderbone.todolist.TodoListEvent.OnDoneChange
+import com.gulderbone.todolist.TodoListEvent.OnTodoClick
+import com.gulderbone.todolist.TodoListEvent.OnUndoDeleteClick
+import com.gulderbone.todolist.data.Todo
 import com.gulderbone.todolist.data.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +20,8 @@ class TodoListViewModel @Inject constructor(
     private val repository: TodoRepository,
 ) : ViewModel() {
 
+    private var deletedTodo: Todo? = null
+
     val todos = repository.getToDos()
 
     private val _uiEvent = Channel<UiEvent>()
@@ -22,19 +29,32 @@ class TodoListViewModel @Inject constructor(
 
     fun onEvent(event: TodoListEvent) {
         when (event) {
-            is TodoListEvent.OnTodoClick -> {
+            is OnTodoClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO + "?todoId=${event.todo.id}"))
             }
-            is TodoListEvent.OnAddTodoCLick -> {
+            is OnAddTodoCLick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO))
             }
-            is TodoListEvent.OnDeleteToDo -> {
-
+            is OnDeleteToDo -> {
+                viewModelScope.launch {
+                    deletedTodo = event.todo
+                    repository.deleteTodo(event.todo)
+                    sendUiEvent(
+                        UiEvent.ShowSnackbar(
+                            message = "Todo deleted",
+                            action = "Undo"
+                        )
+                    )
+                }
             }
-            is TodoListEvent.OnUndoDeleteClick -> {
-
+            is OnUndoDeleteClick -> {
+                deletedTodo?.let { todo ->
+                    viewModelScope.launch {
+                        repository.insertToDo(todo)
+                    }
+                }
             }
-            is TodoListEvent.OnDoneChange -> {
+            is OnDoneChange -> {
 
             }
         }
