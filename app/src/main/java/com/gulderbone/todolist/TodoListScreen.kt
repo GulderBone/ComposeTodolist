@@ -1,5 +1,7 @@
 package com.gulderbone.todolist
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,16 +24,17 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gulderbone.todolist.TodoListEvent.OnDoneChange
+import com.gulderbone.todolist.TodoListEvent.OnTodoClick
 import com.gulderbone.todolist.TodoListEvent.OnUndoDeleteClick
 import com.gulderbone.todolist.UiEvent.Navigate
 import com.gulderbone.todolist.UiEvent.PopBackStack
 import com.gulderbone.todolist.UiEvent.ShowSnackbar
+import com.gulderbone.todolist.data.Todo
 
 @Composable
 fun TodoListScreen(
@@ -78,33 +81,49 @@ fun TodoListScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 items(todos.value) { todo ->
-                    val checkedState = remember { mutableStateOf(false) }
-                    Row(
-                        Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-
-                        Text(
-                            modifier = Modifier.weight(0.8f),
-                            text = todo.title,
-                        )
-                        Checkbox(
-                            checked = checkedState.value,
-                            onCheckedChange = { checkedState.value = it },
-                        )
-                        IconButton(
-                            onClick = { viewModel.onEvent(TodoListEvent.OnDeleteToDo(todo)) },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "delete ToDo",
-                            )
-                        }
-                    }
+                    TodoItem(
+                        todo = todo,
+                        onEvent = viewModel::onEvent,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.onEvent(OnTodoClick(todo))
+                            }
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TodoItem(
+    todo: Todo,
+    onEvent: (TodoListEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            modifier = Modifier.weight(0.8f),
+            text = todo.title,
+        )
+        Checkbox(
+            checked = todo.isDone,
+            onCheckedChange = { isChecked ->
+                onEvent(OnDoneChange(todo, isChecked))
+            },
+        )
+        IconButton(
+            onClick = { onEvent(TodoListEvent.OnDeleteToDo(todo)) },
+        ) {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = "delete Todo",
+            )
         }
     }
 }

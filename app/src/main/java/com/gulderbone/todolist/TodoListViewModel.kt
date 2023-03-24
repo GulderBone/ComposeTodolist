@@ -11,6 +11,7 @@ import com.gulderbone.todolist.data.Todo
 import com.gulderbone.todolist.data.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class TodoListViewModel @Inject constructor(
 
     private var deletedTodo: Todo? = null
 
-    val todos = repository.getToDos()
+    val todos: Flow<List<Todo>> = repository.getToDos()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -55,7 +56,13 @@ class TodoListViewModel @Inject constructor(
                 }
             }
             is OnDoneChange -> {
-
+                viewModelScope.launch {
+                    repository.insertToDo(
+                        event.todo.copy(
+                            isDone = event.isDone
+                        )
+                    )
+                }
             }
         }
     }

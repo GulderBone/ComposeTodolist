@@ -22,6 +22,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -38,8 +40,11 @@ fun AddScreen(
     onPopBackStack: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    val focusManager = LocalFocusManager.current
+    val focusRequester = FocusRequester()
 
     LaunchedEffect(key1 = true) {
+        focusRequester.requestFocus()
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is ShowSnackbar -> snackbarHostState.showSnackbar(
@@ -61,9 +66,10 @@ fun AddScreen(
                     .padding(16.dp)
                     .fillMaxSize()
             ) {
-                val focusManager = LocalFocusManager.current
                 TextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
                     value = viewModel.state.title,
                     onValueChange = {
                         if (it.length < 50) {

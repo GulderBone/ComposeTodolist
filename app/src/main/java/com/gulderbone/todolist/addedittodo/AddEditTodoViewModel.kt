@@ -67,6 +67,7 @@ class AddEditTodoViewModel @Inject constructor(
                             title = state.title,
                             description = state.description,
                             isDone = state.todo?.isDone ?: false,
+                            id = state.todo?.id
                         )
                     )
                     sendUiEvent(UiEvent.PopBackStack)
