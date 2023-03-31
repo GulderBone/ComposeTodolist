@@ -1,4 +1,4 @@
-package com.gulderbone.todolist.addedittodo
+package com.gulderbone.todolist.screens.addedittodo
 
 sealed class AddEditTodoEvent {
 

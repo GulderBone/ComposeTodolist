@@ -1,4 +1,4 @@
-package com.gulderbone.todolist
+package com.gulderbone.todolist.screens.todolist
 
 import com.gulderbone.todolist.data.Todo
 

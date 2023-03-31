@@ -1,13 +1,15 @@
-package com.gulderbone.todolist
+package com.gulderbone.todolist.screens.todolist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gulderbone.todolist.TodoListEvent.OnAddTodoCLick
-import com.gulderbone.todolist.TodoListEvent.OnDeleteToDo
-import com.gulderbone.todolist.TodoListEvent.OnDoneChange
-import com.gulderbone.todolist.TodoListEvent.OnSearchQuery
-import com.gulderbone.todolist.TodoListEvent.OnTodoClick
-import com.gulderbone.todolist.TodoListEvent.OnUndoDeleteClick
+import com.gulderbone.todolist.Routes
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnAddTodoCLick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnDeleteToDo
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnDoneChange
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnSearchQuery
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnTodoClick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnUndoDeleteClick
+import com.gulderbone.todolist.UiEvent
 import com.gulderbone.todolist.data.Todo
 import com.gulderbone.todolist.data.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

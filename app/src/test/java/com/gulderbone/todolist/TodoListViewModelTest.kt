@@ -1,12 +1,13 @@
 package com.gulderbone.todolist
 
-import com.gulderbone.todolist.TodoListEvent.OnAddTodoCLick
-import com.gulderbone.todolist.TodoListEvent.OnDeleteToDo
-import com.gulderbone.todolist.TodoListEvent.OnDoneChange
-import com.gulderbone.todolist.TodoListEvent.OnSearchQuery
-import com.gulderbone.todolist.TodoListEvent.OnTodoClick
-import com.gulderbone.todolist.TodoListEvent.OnUndoDeleteClick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnAddTodoCLick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnDeleteToDo
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnDoneChange
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnSearchQuery
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnTodoClick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnUndoDeleteClick
 import com.gulderbone.todolist.data.TodoRepository
+import com.gulderbone.todolist.screens.todolist.TodoListViewModel
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest

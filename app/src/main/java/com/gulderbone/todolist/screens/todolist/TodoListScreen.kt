@@ -32,12 +32,14 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gulderbone.todolist.TodoListEvent.OnSearchQuery
-import com.gulderbone.todolist.TodoListEvent.OnTodoClick
-import com.gulderbone.todolist.TodoListEvent.OnUndoDeleteClick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnSearchQuery
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnTodoClick
+import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnUndoDeleteClick
 import com.gulderbone.todolist.UiEvent.Navigate
 import com.gulderbone.todolist.UiEvent.PopBackStack
 import com.gulderbone.todolist.UiEvent.ShowSnackbar
+import com.gulderbone.todolist.screens.todolist.TodoListEvent
+import com.gulderbone.todolist.screens.todolist.TodoListViewModel
 
 @Composable
 fun TodoListScreen(
