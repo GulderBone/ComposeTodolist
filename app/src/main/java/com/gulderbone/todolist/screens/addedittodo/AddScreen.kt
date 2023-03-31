@@ -1,4 +1,4 @@
-package com.gulderbone.todolist.addedittodo
+package com.gulderbone.todolist.screens.addedittodo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gulderbone.todolist.UiEvent.PopBackStack
 import com.gulderbone.todolist.UiEvent.ShowSnackbar
-import com.gulderbone.todolist.addedittodo.AddEditTodoEvent.OnDescriptionChange
-import com.gulderbone.todolist.addedittodo.AddEditTodoEvent.OnSaveTodoClick
-import com.gulderbone.todolist.addedittodo.AddEditTodoEvent.OnTitleChange
+import com.gulderbone.todolist.screens.addedittodo.AddEditTodoEvent.OnDescriptionChange
+import com.gulderbone.todolist.screens.addedittodo.AddEditTodoEvent.OnSaveTodoClick
+import com.gulderbone.todolist.screens.addedittodo.AddEditTodoEvent.OnTitleChange
 
 @Composable
 fun AddScreen(
