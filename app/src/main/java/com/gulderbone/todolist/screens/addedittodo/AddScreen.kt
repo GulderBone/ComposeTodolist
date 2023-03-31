@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
@@ -66,51 +67,9 @@ fun AddScreen(
                     .padding(16.dp)
                     .fillMaxSize()
             ) {
-                TextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    value = viewModel.state.title,
-                    onValueChange = {
-                        if (it.length < 50) {
-                            viewModel.onEvent(OnTitleChange(it))
-                        }
-                    },
-                    placeholder = {
-                        Text(text = "Title")
-                    },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.moveFocus(FocusDirection.Next)
-                        }
-                    )
-                )
+                TitleTextField(viewModel, focusRequester, focusManager)
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = viewModel.state.description,
-                    onValueChange = {
-                        if (it.length < 200) {
-                            viewModel.onEvent(OnDescriptionChange(it))
-                        }
-                    },
-                    placeholder = {
-                        Text(text = "Description")
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                            viewModel.onEvent(OnSaveTodoClick)
-                        }
-                    ),
-                )
+                DescriptionTextField(viewModel, focusManager)
             }
         },
         floatingActionButton = {
@@ -123,5 +82,64 @@ fun AddScreen(
                 )
             }
         }
+    )
+}
+
+@Composable
+private fun TitleTextField(
+    viewModel: AddEditTodoViewModel,
+    focusRequester: FocusRequester,
+    focusManager: FocusManager,
+) {
+    TextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester),
+        value = viewModel.state.title,
+        onValueChange = {
+            if (it.length < 50) {
+                viewModel.onEvent(OnTitleChange(it))
+            }
+        },
+        placeholder = {
+            Text(text = "Title")
+        },
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                focusManager.moveFocus(FocusDirection.Next)
+            }
+        )
+    )
+}
+
+@Composable
+private fun DescriptionTextField(
+    viewModel: AddEditTodoViewModel,
+    focusManager: FocusManager,
+) {
+    TextField(
+        modifier = Modifier.fillMaxWidth(),
+        value = viewModel.state.description,
+        onValueChange = {
+            if (it.length < 200) {
+                viewModel.onEvent(OnDescriptionChange(it))
+            }
+        },
+        placeholder = {
+            Text(text = "Description")
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+                viewModel.onEvent(OnSaveTodoClick)
+            }
+        ),
     )
 }
