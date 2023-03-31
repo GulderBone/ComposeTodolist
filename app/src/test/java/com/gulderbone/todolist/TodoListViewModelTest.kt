@@ -8,6 +8,7 @@ import com.gulderbone.todolist.TodoListEvent.OnTodoClick
 import com.gulderbone.todolist.TodoListEvent.OnUndoDeleteClick
 import com.gulderbone.todolist.data.TodoRepository
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
@@ -146,7 +147,7 @@ internal class TodoListViewModelTest {
                 todoRepository = mockTodoRepository,
             )
             viewModel.onEvent(OnDeleteToDo(fakeTodo))
-            advanceUntilIdle()
+            runCurrent()
             viewModel.onEvent(fakeEvent)
             advanceUntilIdle()
 
