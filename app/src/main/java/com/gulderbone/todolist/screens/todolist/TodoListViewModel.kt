@@ -48,6 +48,48 @@ class TodoListViewModel @Inject constructor(
         repeat(100) {
             println("Sonar klałd")
         }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
+        repeat(100) {
+            println("Sonar klałd")
+        }
     }
 
     private val _uiEvent = Channel<UiEvent>()
