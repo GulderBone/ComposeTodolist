@@ -44,6 +44,12 @@ class TodoListViewModel @Inject constructor(
             }
         }
 
+    init {
+        repeat(100) {
+            println("Sonar klałd")
+        }
+    }
+
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
