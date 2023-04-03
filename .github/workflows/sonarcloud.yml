@@ -6,6 +6,22 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
+  code-analysis:
+    executor: android
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          name: Restore Gradle cache
+          key: cache-check-{{ checksum "gradle/libs.versions.toml" }}
+      - run:
+          name: Static code analysis
+          command: ./gradlew detekt lintDebug
+      - store_artifacts:
+          path: app/build/reports/lint-results.html
+          destination: artifacts
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
