@@ -10,7 +10,7 @@ jobs:
     executor: android
 
     steps:
-      - checkout
+      - uses: actions/checkout@v3
       - restore_cache:
           key: wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
