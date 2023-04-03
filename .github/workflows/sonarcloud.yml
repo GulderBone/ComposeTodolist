@@ -1,5 +1,4 @@
 name: SonarCloud
-runs-on: ubuntu-latest
 on:
   push:
     branches:
@@ -11,11 +10,6 @@ jobs:
     executor: android
     steps:
       - uses: actions/checkout@v3
-      - restore_cache:
-          key: wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - restore_cache:
-          name: Restore Gradle cache
-          key: cache-check-{{ checksum "gradle/libs.versions.toml" }}
       - run:
           name: Static code analysis
           command: ./gradlew detekt lintDebug
