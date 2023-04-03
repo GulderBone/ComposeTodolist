@@ -1,4 +1,5 @@
 name: SonarCloud
+runs-on: ubuntu-latest
 on:
   push:
     branches:
@@ -8,7 +9,6 @@ on:
 jobs:
   code-analysis:
     executor: android
-
     steps:
       - uses: actions/checkout@v3
       - restore_cache:
@@ -22,6 +22,7 @@ jobs:
       - store_artifacts:
           path: app/build/reports/lint-results.html
           destination: artifacts
+
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
