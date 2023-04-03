@@ -30,6 +30,11 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Unit Tests
+        - command: ./gradlew testDebugUnitTest
+      - run:
+          name: Jacoco Report
+          command: ./gradlew :jacocoReport
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
