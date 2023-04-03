@@ -3,7 +3,11 @@ buildscript {
         compose_version = '1.3.1'
         room_version = '2.5.1'
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+    dependencies {
+        classpath "org.jacoco:org.jacoco.agent:0.8.8"
+    }
+}
 plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
@@ -13,6 +17,8 @@ plugins {
     id 'org.sonarqube' version '3.5.0.2730'
 }
 
+apply from: "$rootDir/gradle/jacoco.gradle"
+
 sonarqube {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
@@ -20,5 +26,8 @@ sonarqube {
         property "sonar.organization", "gulderbone"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.core.codeCoveragePlugin", "jacoco"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoReport/jacocoReport.xml"
+        property "sonar.coverage.exclusions", rootProject.coverageExcludeClassFiles.join(',')
+        property "sonar.cpd.exclusions", rootProject.duplicationExcludeClassFiles.join(',')
     }
 }
