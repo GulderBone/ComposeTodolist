@@ -6,17 +6,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  code-analysis:
-    executor: android
-    steps:
-      - uses: actions/checkout@v3
-      - run:
-          name: Static code analysis
-          command: ./gradlew detekt lintDebug
-      - store_artifacts:
-          path: app/build/reports/lint-results.html
-          destination: artifacts
-
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
@@ -46,3 +35,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonarqube --info
+
+  code-analysis:
+    name: Detekt
+    executor: android
+    steps:
+      - uses: actions/checkout@v3
+          with:
+            fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - run:
+          name: Static code analysis
+          command: ./gradlew detekt lintDebug
+      - store_artifacts:
+          path: app/build/reports/lint-results.html
+          destination: artifacts
