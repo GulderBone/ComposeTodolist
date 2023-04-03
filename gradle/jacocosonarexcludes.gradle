@@ -1,16 +1,13 @@
 def android = [
-    '**/R.*',
+        '**/R.*',
+        '**/R$*.*',
 ]
 
-def classes = [
-]
+def classes = []
 
-def files = [
-]
+def files = []
 
-def duplicationAllowedFiles = [
-]
+def duplicationAllowedFiles = []
 
 project.ext.coverageExcludeClassFiles = android + classes + files
 project.ext.duplicationExcludeClassFiles = duplicationAllowedFiles
-
