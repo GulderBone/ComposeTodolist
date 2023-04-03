@@ -87,6 +87,9 @@ class TodoListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onEvent2(event: TodoListEvent) {
         when (event) {
             is OnSearchQuery -> {
                 _searchQuery.value = event.query
