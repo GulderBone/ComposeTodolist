@@ -89,48 +89,6 @@ class TodoListViewModel @Inject constructor(
         }
     }
 
-    fun onEvent2(event: TodoListEvent) {
-        when (event) {
-            is OnSearchQuery -> {
-                _searchQuery.value = event.query
-            }
-            is OnTodoClick -> {
-                sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO + "?todoId=${event.todo.id}"))
-            }
-            is OnDoneChange -> {
-                viewModelScope.launch {
-                    todoRepository.insertToDo(
-                        event.todo.copy(
-                            isDone = event.isDone
-                        )
-                    )
-                }
-            }
-            is OnDeleteToDo -> {
-                viewModelScope.launch {
-                    deletedTodo = event.todo
-                    todoRepository.deleteTodo(event.todo)
-                    sendUiEvent(
-                        UiEvent.ShowSnackbar(
-                            message = "${event.todo.title} deleted",
-                            action = "Undo"
-                        )
-                    )
-                }
-            }
-            is OnAddTodoCLick -> {
-                sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO))
-            }
-            is OnUndoDeleteClick -> {
-                deletedTodo?.let { todo ->
-                    viewModelScope.launch {
-                        todoRepository.insertToDo(todo)
-                    }
-                }
-            }
-        }
-    }
-
     private fun sendUiEvent(event: UiEvent) {
         viewModelScope.launch {
             _uiEvent.send(event)
