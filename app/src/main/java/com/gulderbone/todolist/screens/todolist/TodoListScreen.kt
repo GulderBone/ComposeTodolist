@@ -20,11 +20,11 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gulderbone.todolist.UiEvent.Navigate
 import com.gulderbone.todolist.UiEvent.PopBackStack
 import com.gulderbone.todolist.UiEvent.ShowSnackbar
@@ -38,8 +38,8 @@ fun TodoListScreen(
     onNavigate: (Navigate) -> Unit,
     viewModel: TodoListViewModel = hiltViewModel(),
 ) {
-    val searchQuery = viewModel.searchQuery.collectAsState()
-    val todos = viewModel.filteredTodos.collectAsState(initial = emptyList())
+    val searchQuery = viewModel.searchQuery.collectAsStateWithLifecycle()
+    val todos = viewModel.filteredTodos.collectAsStateWithLifecycle(initialValue = emptyList())
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
