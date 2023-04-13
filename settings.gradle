@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -12,5 +13,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ToDo List"
+rootProject.name = "TodoListCompose"
 include ':app'

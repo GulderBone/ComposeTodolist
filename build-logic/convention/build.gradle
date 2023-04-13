@@ -1,0 +1,19 @@
+plugins {
+    id 'java-gradle-plugin'
+    alias(libs.plugins.kotlin.jvm)
+}
+
+dependencies {
+    compileOnly libs.android.gradlePlugin
+    compileOnly libs.kotlin.gradlePlugin
+    compileOnly libs.detekt.gradlePlugin
+}
+
+gradlePlugin {
+    plugins {
+        androidApplicationConvention {
+            id = "gulderbone.android.application"
+            implementationClass = "AndroidApplicationConventionPlugin"
+        }
+    }
+}
