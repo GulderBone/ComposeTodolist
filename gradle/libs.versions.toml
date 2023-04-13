@@ -10,9 +10,11 @@ coreKtx = "1.10.0"
 detekt = "1.22.0"
 hilt = "2.45"
 hiltNavigationCompose = "1.0.0"
+jacoco = "0.8.8"
 junit5 = "5.9.2"
+sonar = "4.0.0.2929"
 navigationCompose = "2.5.3"
-kotlin = "1.8.0"
+kotlin = "1.8.10"
 lifecycle = "2.6.1"
 material3 = "1.1.0-beta01"
 mockito = "4.1.0"
@@ -48,9 +50,13 @@ material3 = { group = "androidx.compose.material3", name = "material3", version.
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+jacoco-gradlePlugin = { group = "org.jacoco", name = "org.jacoco.agent", version.ref = "jacoco" }
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+sonar = { id = "org.sonarqube", version.ref = "sonar" }
