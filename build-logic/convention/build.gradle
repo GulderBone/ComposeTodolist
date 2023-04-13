@@ -15,5 +15,9 @@ gradlePlugin {
             id = "gulderbone.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        androidHiltConvention {
+            id = "gulderbone.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }
