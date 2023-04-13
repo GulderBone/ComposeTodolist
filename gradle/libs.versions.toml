@@ -1,0 +1,62 @@
+[versions]
+activityCompose = "1.7.0"
+androidGradlePlugin = "7.4.2"
+androidJunit = "1.1.5"
+archCoreTesting = "2.2.0"
+compileSdk = "33"
+compose = "1.3.1"
+coroutines = "1.6.4"
+coreKtx = "1.10.0"
+detekt = "1.22.0"
+hilt = "2.45"
+hiltNavigationCompose = "1.0.0"
+jacoco = "0.8.8"
+junit5 = "5.9.2"
+sonar = "4.0.0.2929"
+navigationCompose = "2.5.3"
+kotlin = "1.8.10"
+lifecycle = "2.6.1"
+material3 = "1.1.0-beta01"
+mockito = "4.1.0"
+minSdk = "23"
+room = "2.5.0"
+targetSdk = "33"
+
+[libraries]
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-test = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidJunit" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
+detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }
+kotlin-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+jacoco-gradlePlugin = { group = "org.jacoco", name = "org.jacoco.agent", version.ref = "jacoco" }
+detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+sonar = { id = "org.sonarqube", version.ref = "sonar" }
