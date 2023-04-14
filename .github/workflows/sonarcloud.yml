@@ -36,5 +36,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           ./gradlew testDebugUnitTest
-          ./gradlew :jacocoReport
+          ./gradlew :jacocoReport -- scan
           ./gradlew build sonarqube --info
