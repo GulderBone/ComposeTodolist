@@ -35,7 +35,12 @@ class TodoListViewModel @Inject constructor(
     val todos: Flow<List<Todo>> = todoRepository.getToDos()
     val filteredTodos = searchQuery
         .combine(todos) { query, todos ->
-            if (query.isBlank()) {
+            // DEVELOPMENT
+            if (todos.isEmpty()) {
+                developmentTodos
+            }
+            // DEVELOPMENT
+            else if (query.isBlank()) {
                 todos
             } else {
                 todos.filter {
