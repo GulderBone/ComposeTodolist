@@ -5,7 +5,9 @@ def android = [
 
 def classes = []
 
-def files = []
+def files = [
+        '**/com/gulderbone/todolist/screens/todolist/InitialTodosForDevelopment.kt'
+]
 
 def duplicationAllowedFiles = []
 
