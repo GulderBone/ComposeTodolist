@@ -3,21 +3,22 @@ package com.gulderbone.todolist.screens.todolist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gulderbone.todolist.Routes
+import com.gulderbone.todolist.UiEvent
+import com.gulderbone.todolist.data.Todo
+import com.gulderbone.todolist.data.TodoRepository
 import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnAddTodoCLick
 import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnDeleteToDo
 import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnDoneChange
 import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnSearchQuery
 import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnTodoClick
 import com.gulderbone.todolist.screens.todolist.TodoListEvent.OnUndoDeleteClick
-import com.gulderbone.todolist.UiEvent
-import com.gulderbone.todolist.data.Todo
-import com.gulderbone.todolist.data.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,9 +33,9 @@ class TodoListViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    val todos: Flow<List<Todo>> = todoRepository.getToDos()
-    val filteredTodos = searchQuery
-        .combine(todos) { query, todos ->
+    private val dbTodos: Flow<List<Todo>> = todoRepository.getToDos()
+    private val filteredTodos = searchQuery
+        .combine(dbTodos) { query, todos ->
             // DEVELOPMENT
             if (todos.isEmpty()) {
                 developmentTodos
@@ -48,6 +49,14 @@ class TodoListViewModel @Inject constructor(
                 }
             }
         }
+    val notDoneTodos = filteredTodos
+        .map { todos ->
+            todos.filter { !it.isDone }
+        }
+    val doneTodos = filteredTodos
+        .map { todos ->
+            todos.filter { it.isDone }
+        }
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -57,9 +66,11 @@ class TodoListViewModel @Inject constructor(
             is OnSearchQuery -> {
                 _searchQuery.value = event.query
             }
+
             is OnTodoClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO + "?todoId=${event.todo.id}"))
             }
+
             is OnDoneChange -> {
                 viewModelScope.launch {
                     todoRepository.insertToDo(
@@ -69,6 +80,7 @@ class TodoListViewModel @Inject constructor(
                     )
                 }
             }
+
             is OnDeleteToDo -> {
                 viewModelScope.launch {
                     deletedTodo = event.todo
@@ -81,9 +93,11 @@ class TodoListViewModel @Inject constructor(
                     )
                 }
             }
+
             is OnAddTodoCLick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO))
             }
+
             is OnUndoDeleteClick -> {
                 deletedTodo?.let { todo ->
                     viewModelScope.launch {

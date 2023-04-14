@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -39,7 +40,8 @@ fun TodoListScreen(
     viewModel: TodoListViewModel = hiltViewModel(),
 ) {
     val searchQuery = viewModel.searchQuery.collectAsStateWithLifecycle()
-    val todos = viewModel.filteredTodos.collectAsStateWithLifecycle(initialValue = emptyList())
+    val notDoneTodos = viewModel.notDoneTodos.collectAsStateWithLifecycle(initialValue = emptyList())
+    val doneTodos = viewModel.doneTodos.collectAsStateWithLifecycle(initialValue = emptyList())
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
@@ -86,9 +88,21 @@ fun TodoListScreen(
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                TodoItemList(todos, viewModel)
+                TodoItemList(notDoneTodos, viewModel)
+                TodoItemListsDivider(notDoneTodos, doneTodos)
+                TodoItemList(doneTodos, viewModel)
             }
         }
+    }
+}
+
+@Composable
+private fun TodoItemListsDivider(
+    notDoneTodos: State<List<Todo>>,
+    doneTodos: State<List<Todo>>,
+) {
+    if (notDoneTodos.value.isNotEmpty() && doneTodos.value.isNotEmpty()) {
+        Divider()
     }
 }
 
