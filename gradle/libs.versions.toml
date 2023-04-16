@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.7.0"
-androidGradlePlugin = "7.4.2"
+androidGradlePlugin = "8.0.0"
 androidJunit = "1.1.5"
 archCoreTesting = "2.2.0"
 compileSdk = "33"
@@ -18,7 +18,7 @@ kotlin = "1.8.10"
 lifecycle = "2.6.1"
 material3 = "1.1.0-beta01"
 mockito = "4.1.0"
-minSdk = "23"
+minSdk = "26"
 room = "2.5.0"
 targetSdk = "33"
 
