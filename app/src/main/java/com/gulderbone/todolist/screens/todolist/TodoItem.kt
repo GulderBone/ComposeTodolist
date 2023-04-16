@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.gulderbone.todolist.data.Todo
 
@@ -21,16 +22,22 @@ fun TodoItem(
     onEvent: (TodoListEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val textDecoration = if (todo.isDone) {
+        TextDecoration.LineThrough
+    } else {
+        TextDecoration.None
+    }
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .weight(0.8f),
             text = todo.title,
+            textDecoration = textDecoration,
         )
         Checkbox(
             checked = todo.isDone,
