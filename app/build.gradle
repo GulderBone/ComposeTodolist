@@ -1,6 +1,7 @@
 plugins {
     id 'gulderbone.android.application'
     id 'gulderbone.android.hilt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -45,6 +46,10 @@ dependencies {
     implementation libs.hilt.navigation.compose
     implementation libs.compose.material
     implementation libs.androidx.core.ktx
+    implementation libs.firebase.auth
+    implementation libs.gms.play.services.auth
+
+    implementation platform(libs.firebase.bom)
 
     testImplementation libs.androidx.core.test
     testImplementation libs.jupiter.api
