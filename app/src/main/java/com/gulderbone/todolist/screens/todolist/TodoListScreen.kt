@@ -8,19 +8,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Divider
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,7 +44,7 @@ fun TodoListScreen(
     val searchQuery = viewModel.searchQuery.collectAsStateWithLifecycle()
     val notDoneTodos = viewModel.notDoneTodos.collectAsStateWithLifecycle(initialValue = emptyList())
     val doneTodos = viewModel.doneTodos.collectAsStateWithLifecycle(initialValue = emptyList())
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -50,7 +52,7 @@ fun TodoListScreen(
                 is Navigate -> onNavigate(event)
                 is PopBackStack -> TODO()
                 is ShowSnackbar -> {
-                    val result = scaffoldState.snackbarHostState.showSnackbar(
+                    val result = snackbarHostState.showSnackbar(
                         message = event.message,
                         actionLabel = event.action,
                     )
@@ -63,7 +65,7 @@ fun TodoListScreen(
     }
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -75,7 +77,7 @@ fun TodoListScreen(
     ) { padding ->
         Surface(
             modifier = Modifier.padding(padding),
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),

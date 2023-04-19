@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.gulderbone.todolist.screens.addedittodo.AddScreen
+import com.gulderbone.todolist.screens.login.LoginScreen
 import com.gulderbone.todolist.screens.todolist.TodoListScreen
 import com.gulderbone.todolist.ui.theme.ToDoListTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,8 +24,18 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.TODO_LIST,
+                    startDestination = Routes.LOGIN,
                 ) {
+                    composable(
+                        route = Routes.LOGIN
+                    ) {
+                        LoginScreen(
+                            onNavigate = {
+                                navController.popBackStack()
+                                navController.navigate(it.route)
+                            },
+                        )
+                    }
                     composable(
                         route = Routes.TODO_LIST
                     ) {
