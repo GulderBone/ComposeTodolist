@@ -1,3 +1,4 @@
+// Jacoco bug with duplication classes https://github.com/Kotlin/kotlinx-kover/issues/78
 def android = [
         '**/R.*',
         '**/R$*.*',
@@ -13,7 +14,7 @@ def android = [
         '**/*Fragment.*',
         '**/*Service.*',
         '**/*Dialog.*',
-        '**/*Application*.*',
+        '**/*App.*',
         '**/*JsonAdapter.*',
         '**/di/**',
         '**/widget/**',
