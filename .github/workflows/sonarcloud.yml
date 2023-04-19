@@ -39,11 +39,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - run:
-          name: UnitTests
-          command: ./gradlew testDebugUnitTest
+        name: UnitTests
+        command: ./gradlew testDebugUnitTest
       - run:
-          name: Jacoco Report
-          command: ./gradlew :jacocoReport --info
+        name: Jacoco Report
+        command: ./gradlew :jacocoReport --info
       - run:
-          name: SonarQube
-          command: ./gradlew build sonarqube --info
+        name: SonarQube
+        command: ./gradlew build sonarqube --info
