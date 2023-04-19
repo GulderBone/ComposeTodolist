@@ -14,7 +14,7 @@ def android = [
         '**/*Fragment.*',
         '**/*Service.*',
         '**/*Dialog.*',
-        '**/*App.*',
+        '**/*App*.*',
         '**/*JsonAdapter.*',
         '**/di/**',
         '**/widget/**',
@@ -22,7 +22,7 @@ def android = [
         '**/presentation/**/*Adapter.*',
         '**/presentation/**/*AdapterImpl.*',
         '**/*View.*',
-        '**/network/rest/model/**',
+        '**/*Screen.*',
 ]
 
 def classes = []
