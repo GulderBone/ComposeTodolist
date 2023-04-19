@@ -1,6 +1,7 @@
 def android = [
         '**/R.*',
         '**/R$*.*',
+        '**/*Activity.*',
 ]
 
 def classes = []
