@@ -1,6 +1,28 @@
+// Jacoco bug with duplication classes https://github.com/Kotlin/kotlinx-kover/issues/78
 def android = [
         '**/R.*',
         '**/R$*.*',
+        '**/*$ViewInjector*.*',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        'android/**/*.*',
+        '**/databinding/**',
+        '**/*NavDirections*',
+        '**/*NavArgs*',
+        '**/*Injector.*',
+        '**/*Activity.*',
+        '**/*Fragment.*',
+        '**/*Service.*',
+        '**/*Dialog.*',
+        '**/*App*.*',
+        '**/*JsonAdapter.*',
+        '**/di/**',
+        '**/widget/**',
+        '**/*ModuleKt.*',
+        '**/presentation/**/*Adapter.*',
+        '**/presentation/**/*AdapterImpl.*',
+        '**/*View.*',
+        '**/*Screen.*',
 ]
 
 def classes = []
