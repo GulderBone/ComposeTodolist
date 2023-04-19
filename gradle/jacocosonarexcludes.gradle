@@ -1,7 +1,27 @@
 def android = [
         '**/R.*',
         '**/R$*.*',
+        '**/*$ViewInjector*.*',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        'android/**/*.*',
+        '**/databinding/**',
+        '**/*NavDirections*',
+        '**/*NavArgs*',
+        '**/*Injector.*',
         '**/*Activity.*',
+        '**/*Fragment.*',
+        '**/*Service.*',
+        '**/*Dialog.*',
+        '**/*Application*.*',
+        '**/*JsonAdapter.*',
+        '**/di/**',
+        '**/widget/**',
+        '**/*ModuleKt.*',
+        '**/presentation/**/*Adapter.*',
+        '**/presentation/**/*AdapterImpl.*',
+        '**/*View.*',
+        '**/network/rest/model/**',
 ]
 
 def classes = []
