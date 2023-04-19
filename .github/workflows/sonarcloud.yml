@@ -34,10 +34,10 @@ jobs:
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $GOOGLE_SERVICES_JSON | base64 -di > /home/runner/work/ComposeTodolist/ComposeTodolist/app/google-services.json
-      - name: UnitTests
+      - name: Unit Tests
         run: ./gradlew testDebugUnitTest
       - name: Jacoco Report
-        run: ./gradlew :jacocoReport --info
+        run: ./gradlew :jacocoReport --stacktrace
       - name: SonarQube
         run: ./gradlew build sonarqube --info
         env:
