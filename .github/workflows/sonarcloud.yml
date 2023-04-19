@@ -36,9 +36,9 @@ jobs:
         run: echo $GOOGLE_SERVICES_JSON | base64 -di > /home/runner/work/ComposeTodolist/ComposeTodolist/app/google-services.json
       - name: UnitTests
         run: ./gradlew testDebugUnitTest
-      - name:
+      - name: Jacoco Report
         run: ./gradlew :jacocoReport --info
-      - name:
+      - name: SonarQube
         run: ./gradlew build sonarqube --info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
