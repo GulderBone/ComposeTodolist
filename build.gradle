@@ -5,6 +5,7 @@ buildscript {
         classpath libs.kotlin.gradlePlugin
         classpath libs.hilt.gradlePlugin
         classpath libs.jacoco.gradlePlugin
+        classpath libs.gms.gradlePlugin
     }
 }
 plugins {
